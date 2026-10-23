@@ -2,8 +2,8 @@ package com.example.tareas.data
 
 data class Task(
     val id: Int,
-    val title: String,
-    val done: Boolean
+    var title: String,
+    var done: Boolean
 ) {
     companion object {
         const val TABLE_NAME = "Tasks"
@@ -19,4 +19,4 @@ data class Task(
 
         const val SQL_DROP_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
     }
-}
+} // 47:12
