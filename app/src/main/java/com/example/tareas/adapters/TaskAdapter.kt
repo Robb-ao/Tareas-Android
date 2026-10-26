@@ -2,10 +2,12 @@ package com.example.tareas.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tareas.R
 import com.example.tareas.data.Task
 import com.example.tareas.databinding.ItemTaskBinding
+import com.example.tareas.utils.TaskDiffUtil
 
 
 class TaskAdapter(
@@ -44,6 +46,8 @@ class TaskAdapter(
     override fun getItemCount(): Int = items.size
 
     fun updateData(dataSet: List<Task>) {
+        val diffCallbacks = TaskDiffUtil(oldList = items, dataSet )
+        val diffResult = DiffUtil.calculateDiff(diffCallbacks)
         items = dataSet
         notifyDataSetChanged()
     }
