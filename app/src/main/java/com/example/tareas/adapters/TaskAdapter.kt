@@ -10,8 +10,12 @@ import com.example.tareas.databinding.ItemTaskBinding
 
 class TaskAdapter(
     var items: List<Task>,
-    val onItemClick: (position: Int) -> Unit
+    val onItemClick: (position: Int) -> Unit,
+    val onItemCheck: (position: Int) -> Unit,
+    val onItemEdit: (position: Int) -> Unit,
+    val onItemDelete: (position: Int) -> Unit
 ) : RecyclerView.Adapter<TaskViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemTaskBinding.inflate(layoutInflater, parent, false)
@@ -24,6 +28,11 @@ class TaskAdapter(
         holder.itemView.setOnClickListener {
             onItemClick(position)
         }
+        holder.binding.doneCheckBox.setOnCheckedChangeListener { _, _ ->
+            if (holder.binding.doneCheckBox.isPressed){
+                onItemCheck(position)
+            }
+        }
     }
 
     override fun getItemCount(): Int = items.size
@@ -32,9 +41,7 @@ class TaskAdapter(
         items = dataSet
         notifyDataSetChanged()
     }
-
 }
-
 class TaskViewHolder(val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
     //1:11
     fun render(task: Task) {

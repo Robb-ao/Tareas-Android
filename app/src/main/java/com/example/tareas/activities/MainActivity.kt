@@ -35,25 +35,31 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
         taskDAO = TaskDAO(this)
-
-        val task1 = Task(-1, "Comprar leche")
-        val task2 = Task(-1, "Comprar Vino")
-        val task3 = Task(-1, "Comprar Pan")
-
-        taskDAO.insert(task1)
-        taskDAO.insert(task2)
-        taskDAO.insert(task3)
 
         taskList = taskDAO.findAll()
 
-        adapter = TaskAdapter(taskList){
+        adapter = TaskAdapter(taskList, ::onItemClick, ::onItemCheck, ::onItemEdit, ::onItemDelete)
 
-        }
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
     }
+
+    fun onItemClick(position: Int){
+        onItemCheck(position)
+    }
+
+    fun onItemCheck(position: Int){
+        val task = taskList[position]
+        task.done = !task.done
+        taskDAO.update(task)
+
+        //TODO: se puede optimizar
+        taskList = taskDAO.findAll()
+        adapter.updateData((taskList))
+    }
+
+    fun onItemEdit(position: Int){}
+    fun onItemDelete(position: Int){}
 }
