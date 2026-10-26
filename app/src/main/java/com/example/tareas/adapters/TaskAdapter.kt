@@ -33,6 +33,12 @@ class TaskAdapter(
                 onItemCheck(position)
             }
         }
+        holder.binding.editButton.setOnClickListener {
+            onItemEdit(position)
+        }
+        holder.binding.deleteButton.setOnClickListener {
+            onItemDelete(position)
+        }
     }
 
     override fun getItemCount(): Int = items.size
